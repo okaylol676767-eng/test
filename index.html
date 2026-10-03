@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Twisted — Chapter 1: 9:00 PM Sharp</title>
+<meta name="description" content="A branching neighborhood romance. Zade & Adeline. Every choice twists the story.">
+<link rel="stylesheet" href="css/style.css?v=45">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='13' fill='%230c0b10'/><path d='M10 22 L16 9 L22 22' stroke='%23d43a4d' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/><line x1='12.6' y1='17.5' x2='19.4' y2='17.5' stroke='%23f2e8dc' stroke-width='2' stroke-linecap='round'/></svg>">
+</head>
+<body data-mood="">
+<div id="app">
+  <!-- ambient layers -->
+  <div id="moodVeil" aria-hidden="true"></div>
+  <div id="vignette" aria-hidden="true"></div>
+  <div id="grain" aria-hidden="true"></div>
+  <div id="dust" aria-hidden="true"></div>
+
+  <!-- ===== TITLE SCREEN ===== -->
+  <section id="titleScreen" class="screen visible">
+    <div class="title-inner">
+      <p class="title-kicker">A neighborhood romance · Dual POV · Chapter 1</p>
+      <h1 class="game-title">TW<span class="title-i">I</span>STED</h1>
+      <p class="title-sub">He’s the noise moving in next door.<br>She’s the reason he doesn’t mind.</p>
+
+      <div class="title-cast">
+        <figure class="cast-card" id="castAdeline">
+          <img src="assets/adeline.jpg" alt="Adeline" draggable="false">
+          <figcaption>Adeline<span>the neighbor with the sleep mask</span></figcaption>
+        </figure>
+        <div class="cast-heart" aria-hidden="true">&times;</div>
+        <figure class="cast-card" id="castZade">
+          <img src="assets/zade.jpg" alt="Zade" draggable="false">
+          <figcaption>Zade<span>the one with the power drill</span></figcaption>
+        </figure>
+      </div>
+
+      <div class="title-actions">
+        <button class="btn btn-primary" id="btnNew">New Game</button>
+        <button class="btn btn-ghost" id="btnContinue" disabled>Continue</button>
+      </div>
+      <p class="title-hint">Click or press <kbd>Space</kbd> to advance · choices are tracked</p>
+      <p class="title-warning">Mature themes · sensual tension, nothing explicit · all choices fictional</p>
+    </div>
+  </section>
+
+  <!-- ===== CINEMATIC PROLOGUE ===== -->
+  <section id="introScreen" class="screen intro-screen" aria-label="Chapter one cinematic opening" hidden>
+    <div class="intro-city" aria-hidden="true">
+      <svg viewBox="0 0 1200 720" preserveAspectRatio="xMidYMid slice">
+        <defs><linearGradient id="introSky" x2="0" y2="1"><stop stop-color="#141520"/><stop offset=".66" stop-color="#493643"/><stop offset="1" stop-color="#bd795a"/></linearGradient><linearGradient id="introStreet" x2="0" y2="1"><stop stop-color="#29232d"/><stop offset="1" stop-color="#0b0a10"/></linearGradient><radialGradient id="introWindow"><stop stop-color="#ffd29a"/><stop offset="1" stop-color="#d77752"/></radialGradient></defs>
+        <rect width="1200" height="720" fill="url(#introSky)"/><circle cx="970" cy="150" r="70" fill="#e7bc9e" opacity=".68"/><path d="M0 390L70 350 130 378 190 305 260 360 320 290 390 355 458 326 535 375 610 308 680 364 760 300 830 350 890 295 960 350 1040 292 1110 350 1200 314V720H0Z" fill="#252330" opacity=".75"/>
+        <g fill="#322d39" stroke="#181720" stroke-width="8"><path d="M84 250H458V600H84Z"/><path d="M472 178H796V600H472Z"/><path d="M812 224H1117V600H812Z"/></g>
+        <g fill="url(#introWindow)" opacity=".9"><path d="M119 289h64v82h-64zm112 0h64v82h-64zm112 0h64v82h-64zM119 414h64v82h-64zm112 0h64v82h-64z"/><path d="M515 220h68v84h-68zm116 0h68v84h-68zM515 344h68v84h-68zm116 0h68v84h-68z"/><path d="M852 265h59v76h-59zm103 0h59v76h-59zm-103 117h59v76h-59z"/></g>
+        <path d="M0 570Q340 520 610 580T1200 560V720H0Z" fill="url(#introStreet)"/><path d="M540 720L585 590h30L690 720" fill="#d5a372" opacity=".2"/><path d="M0 626H1200" stroke="#e3bd91" stroke-opacity=".16" stroke-width="3"/>
+      </svg>
+    </div>
+    <div class="intro-grain" aria-hidden="true"></div>
+    <div class="intro-letterbox intro-letterbox-top" aria-hidden="true"></div>
+    <div class="intro-letterbox intro-letterbox-bottom" aria-hidden="true"></div>
+    <div class="intro-film-meta"><span>TWISTED PICTURES</span><span>CHAPTER ONE · 9:00 PM SHARP</span></div>
+    <div class="intro-copy" aria-live="polite">
+      <p class="intro-eyebrow" id="introEyebrow">A NEIGHBORHOOD STORY</p>
+      <h2 class="intro-title" id="introTitle">Two doors.<br>One wall.</h2>
+      <p class="intro-text" id="introText">On a quiet floor, a new neighbor is about to make himself impossible to ignore.</p>
+      <div class="intro-progress" id="introProgress" aria-label="Opening sequence progress"></div>
+      <div class="intro-actions"><button class="intro-next" id="btnIntroNext">Continue <span aria-hidden="true">→</span></button><button class="intro-skip" id="btnIntroSkip">Skip opening</button></div>
+    </div>
+    <div class="intro-credit">A STORY ABOUT THE SPACE BETWEEN TWO DOORS</div>
+  </section>
+
+  <!-- ===== GAME SCREEN ===== -->
+  <section id="gameScreen" class="screen">
+    <header id="hud">
+      <button class="hud-btn" id="btnMenu" title="Menu">☰ <span>Menu</span></button>
+      <div class="hud-title" id="hudChapter">Chapter 1 · 9:00 PM Sharp</div>
+      <div class="hud-pov" id="hudPov">—</div>
+    </header>
+
+    <main id="stage" aria-label="Story scene">
+      <div id="sceneBackground" class="scene-background" aria-label="Scene background"></div>
+      <div id="sceneProps" class="scene-props" aria-hidden="true"></div>
+      <div id="visualTransition" class="visual-transition" aria-live="polite" aria-atomic="true"></div>
+      <div class="portrait-slot left" id="slotLeft" hidden>
+        <img id="imgLeft" alt="Adeline" draggable="false">
+        <span class="character-cue" id="cueLeft"></span>
+      </div>
+      <div class="portrait-slot right" id="slotRight" hidden>
+        <img id="imgRight" alt="Zade" draggable="false">
+        <span class="character-cue" id="cueRight"></span>
+      </div>
+      <!-- near layer: room furniture drawn in front of the figures -->
+      <div id="sceneForeground" class="scene-foreground" aria-hidden="true"></div>
+    </main>
+
+    <div id="actCard" hidden>
+      <div class="act-inner">
+        <p class="act-kicker" id="actKicker"></p>
+        <h2 class="act-title" id="actTitle"></h2>
+        <p class="act-sub" id="actSub"></p>
+      </div>
+    </div>
+
+    <footer id="dialogue" class="hidden">
+      <div id="dialogueHeader">
+        <span id="speakerName"></span>
+        <span id="povChip"></span>
+        <div id="voiceControls" aria-label="Voiceover controls">
+          <button id="btnVoiceToggle" type="button" aria-pressed="true" title="Turn character voiceover off">VO ON</button>
+          <button id="btnVoiceReplay" type="button" title="Replay this line" aria-label="Replay voiceover">↻</button>
+        </div>
+      </div>
+      <div id="dialogueText" tabindex="0"></div>
+      <div id="dialogueFoot">
+        <span id="advanceHint">Tap to continue</span>
+      </div>
+    </footer>
+
+    <div id="choices" hidden></div>
+
+    <!-- menu drawer -->
+    <div id="menuDrawer" hidden>
+      <div class="menu-panel">
+        <h3>Menu</h3>
+        <button class="btn btn-menu" id="btnResume">Resume</button>
+        <button class="btn btn-menu" id="btnSaveQuit">Save & Title</button>
+        <button class="btn btn-menu danger" id="btnWipe">Delete Save</button>
+        <div class="voice-picker">
+          <label for="voiceAdeline">Adeline voice</label>
+          <select id="voiceAdeline"><option value="">System voice · feminine</option></select>
+          <label for="voiceZade">Zade voice</label>
+          <select id="voiceZade"><option value="">System voice · masculine</option></select>
+        </div>
+        <button class="btn btn-menu" id="btnCheats">Dev: chapter flags</button>
+        <code id="flagDump"></code>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== END SCREEN ===== -->
+  <section id="endScreen" class="screen">
+    <div class="end-inner">
+      <p class="title-kicker">End of Chapter 1</p>
+      <h1 class="end-title">To be twisted<br>in Chapter 2…</h1>
+      <div id="endCodeBlock" class="end-code"></div>
+      <div id="endReport" class="end-report"></div>
+      <div class="title-actions">
+        <button class="btn btn-primary" id="btnReplay">Play Again</button>
+        <button class="btn btn-ghost" id="btnEndTitle">Title Screen</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script src="js/engine.js?v=20"></script>
+<script src="js/visuals.js?v=61"></script>
+<script src="js/story/chapter1.js?v=20"></script>
+<script src="js/story/visual-map.js?v=34"></script>
+<script src="js/intro.js?v=29"></script>
+<script src="js/ui.js?v=46"></script>
+</body>
+</html>
